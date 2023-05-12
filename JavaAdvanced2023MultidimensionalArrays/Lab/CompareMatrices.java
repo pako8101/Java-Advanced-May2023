@@ -1,5 +1,6 @@
 package JavaAdvanced2023MultidimensionalArrays.Lab;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class CompareMatrices {
@@ -37,26 +38,30 @@ public class CompareMatrices {
 
 
     private static boolean areEqualMatrix(int[][] firstMatrix, int[][] secondMatrix) {
-if ( firstMatrix.length != secondMatrix.length){
-    return false;
-}
-        for (int r = 0; r < firstMatrix.length; r++) {
-
-            int[] first = firstMatrix[r];
-            int[] second = secondMatrix[r];
-            if (first.length != second.length) {
-                return false;
-            }
-            for (int i = 0; i < first.length; i++) {
-                int firstNum = first[i];
-                int secondNum = second[i];
-                if (firstNum != secondNum) {
-                    return false;
-
-                }
-            }
+        if (Arrays.deepEquals(firstMatrix, secondMatrix)) {
+            return true;
         }
-        return true;
+        return false;
+//        if (firstMatrix.length != secondMatrix.length) {
+//            return false;
+//        }
+//        for (int r = 0; r < firstMatrix.length; r++) {
+//            int[] first = firstMatrix[r];
+//            int[] second = secondMatrix[r];
+//            if (first.length != second.length) {
+//                return false;
+//            }
+//            for (int i = 0; i < first.length; i++) {
+//                int firstNum = first[i];
+//                int secondNum = second[i];
+//                if (firstNum != secondNum) {
+//                    return false;
+//
+//                }
+//            }
+//        }
+//        return true;
+//    }
     }
 
     public static void printMatrix(int[][] firstMatrix) {
@@ -69,4 +74,5 @@ if ( firstMatrix.length != secondMatrix.length){
 
     }
 }
+
 

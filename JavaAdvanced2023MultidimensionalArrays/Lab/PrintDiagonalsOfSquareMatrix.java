@@ -7,7 +7,7 @@ public class PrintDiagonalsOfSquareMatrix {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        int size = Integer.parseInt(scanner.nextLine()) ;
+        int size = Integer.parseInt(scanner.nextLine());
 
         int[][] matrix = new int[size][size];
         for (int r = 0; r < matrix.length; r++) {
@@ -17,20 +17,28 @@ public class PrintDiagonalsOfSquareMatrix {
         }
 //        for (int i = 0; i < matrix.length; i++) {
 //            System.out.print(matrix[i][i] + " ");
-        int row=0;
+        int row = 0;
         int cal = 0;
-        while (row< matrix.length && cal< matrix[row].length){
+        while (row < matrix.length && cal < matrix[row].length) {
             System.out.print(matrix[row][cal] + " ");
             row++;
             cal++;
         }
         System.out.println();
-        row = matrix.length-1;
-        cal= 0;
-        while (row>=0&&cal< matrix[row].length){
+        row = matrix.length - 1;
+        cal = 0;
+        while (row >= 0 && cal < matrix[row].length) {
             System.out.print(matrix[row][cal] + " ");
             row--;
             cal++;
+        }
+        System.out.println();
+        row = matrix.length - 1;
+         cal = matrix[row].length-1;
+        while (row >= 0 && cal >=0) {
+            System.out.print(matrix[row][cal] + " ");
+            row--;
+            cal--;
         }
     }
 

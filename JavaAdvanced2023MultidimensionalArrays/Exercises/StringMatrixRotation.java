@@ -1,6 +1,7 @@
 package JavaAdvanced2023MultidimensionalArrays.Exercises;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,6 +23,7 @@ public class StringMatrixRotation {
             wordList.add(input);
             if (input.length() > maxLength) {
                 maxLength = input.length();
+                String max= Collections.max(wordList);
             }
 
             input = scanner.nextLine();

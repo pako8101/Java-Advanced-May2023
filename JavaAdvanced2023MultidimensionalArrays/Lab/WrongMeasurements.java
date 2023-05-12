@@ -23,11 +23,11 @@ public class WrongMeasurements {
             for (int c = 0; c < matrix[r].length; c++) {
                 if (matrix[r][c] == valueToReplace) {
                     int correctValue = getNearBySum(matrix, r, c, valueToReplace);
-                    listCorrectValues.add(new  int[]{r,c,correctValue});
+                    listCorrectValues.add(new int[]{r, c, correctValue});
                 }
             }
         }
-        for (int []correctIndexes: listCorrectValues) {
+        for (int[] correctIndexes : listCorrectValues) {
             int row = correctIndexes[0];
             int col = correctIndexes[1];
             matrix[row][col] = correctIndexes[2];
@@ -43,16 +43,16 @@ public class WrongMeasurements {
 
     private static int getNearBySum(int[][] matrix, int r, int c, int valueToReplace) {
         int sum = 0;
-        if (isInBounds(matrix, r + 1, c)&&matrix[r + 1][c] !=valueToReplace) {
+        if (isInBounds(matrix, r + 1, c) && matrix[r + 1][c] != valueToReplace) {
             sum += matrix[r + 1][c];
         }
-        if (isInBounds(matrix, r - 1, c)&&matrix[r -1][c] !=valueToReplace) {
+        if (isInBounds(matrix, r - 1, c) && matrix[r - 1][c] != valueToReplace) {
             sum += matrix[r - 1][c];
         }
-        if (isInBounds(matrix, r, c - 1)&&matrix[r ][c-1] !=valueToReplace) {
+        if (isInBounds(matrix, r, c - 1) && matrix[r][c - 1] != valueToReplace) {
             sum += matrix[r][c - 1];
         }
-        if (isInBounds(matrix, r, c + 1)&&matrix[r ][c+1] !=valueToReplace) {
+        if (isInBounds(matrix, r, c + 1) && matrix[r][c + 1] != valueToReplace) {
             sum += matrix[r][c + 1];
         }
 
@@ -64,7 +64,7 @@ public class WrongMeasurements {
     }
 
     private static boolean isInBounds(int[][] matrix, int r, int c) {
-        return r >= 0 && r < matrix.length  && c >= 0 && c < matrix[r].length;
+        return r >= 0 && r < matrix.length && c >= 0 && c < matrix[r].length;
     }
 
     private static int[] getArray(Scanner scanner) {
@@ -72,4 +72,5 @@ public class WrongMeasurements {
                 .mapToInt(Integer::parseInt)
                 .toArray();
     }
+
 }
