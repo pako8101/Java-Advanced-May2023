@@ -11,6 +11,6 @@ public class Car {
 
     @Override
     public String toString() {
-        return carModel + " " + String.format("%d", carSpeed);
+        return carModel + " " +  carSpeed;
     }
 }
