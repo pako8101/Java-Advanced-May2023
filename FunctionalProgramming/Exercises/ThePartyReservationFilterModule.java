@@ -28,6 +28,7 @@ public class ThePartyReservationFilterModule {
         }
         filters.forEach(filter -> {
             Predicate<String> filterToApply = getPredicate(filter);
+            assert filterToApply != null;
             guests.removeIf(filterToApply);
         });
         guests.forEach(name -> System.out.print(name + " "));
@@ -35,8 +36,8 @@ public class ThePartyReservationFilterModule {
 
     private static Predicate<String> getPredicate(String filter) {
         String[] filterParts = filter.split(";");
-        String filterType = filterParts[0];
-        String parameter = filterParts[1];
+        String filterType = filterParts[1];
+        String parameter = filterParts[2];
         switch (filterType) {
             case "Starts with":
                 return s -> s.startsWith(parameter);
