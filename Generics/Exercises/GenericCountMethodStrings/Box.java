@@ -27,13 +27,11 @@ public class Box<T extends Comparable> {
 //        values.set(first, values.get(first-second));
 ////        first = first - second;
     }
-
     public int countGreaterItems(T elementToCompare) {
         return (int) values.stream()
                 .filter(elementFromBox -> elementFromBox.compareTo(elementToCompare) > 0)
                 .count();
     }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
