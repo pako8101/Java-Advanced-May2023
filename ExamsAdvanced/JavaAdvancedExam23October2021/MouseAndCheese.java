@@ -7,6 +7,7 @@ public class MouseAndCheese {
     private static int mouseCol;
     private static int cheese;
     private static int cheeseLeft;
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -28,82 +29,52 @@ public class MouseAndCheese {
         }
         String command = scanner.nextLine();
         while (!command.equals("end")) {
-            String direction = scanner.nextLine();
+            // String direction = scanner.nextLine();
             matrix[mouseRow][mouseCol] = '-';
-            switch (direction) {
+            switch (command) {
                 case "up":
-                    if (mouseRow - 1 > 0) {
-                        System.out.println("Where is the mouse?");
-                        return;
-                    } else {
-                        if (matrix[mouseRow][mouseCol] == 'c') {
-                            cheese++;
-                            matrix[mouseRow][mouseCol] = '-';
-                        }
-                        mouseRow--;
-                    }
+                    mouseRow--;
                     break;
                 case "down":
-                    if (mouseRow + 1 >= size) {
-                        System.out.println("Where is the mouse?");
-                        return;
-                    } else {
-                        if (matrix[mouseRow][mouseCol] == 'c') {
-                            cheese++;
-                            matrix[mouseRow][mouseCol] = '-';
-                        }
-                        mouseRow++;
-                    }
+                    mouseRow++;
                     break;
                 case "left":
-                    if (mouseCol - 1 > 0) {
-                        System.out.println("Where is the mouse?");
-                        return;
-                    } else {
-                        mouseCol--;
-                        if (matrix[mouseRow][mouseCol] == 'c') {
-                            cheese++;
-                            matrix[mouseRow][mouseCol] = '-';
-                        }
-                    }
+                    mouseCol--;
                     break;
                 case "right":
-                    if (mouseCol + 1 >= size) {
-                        System.out.println("Where is the mouse?");
-                        return;
-                    } else {
-                        mouseCol++;
-                        if (matrix[mouseRow][mouseCol] == 'c') {
-                            cheese++;
-                            matrix[mouseRow][mouseCol] = '-';
-                        }
-                    }
-                    break;
+                    mouseCol++;
 
+                    break;
+            }
+            if (mouseCol >= size || mouseCol < 0 || mouseRow >= size || mouseRow < 0) {
+                System.out.println("Where is the mouse?");
+                break;
             }
             if (matrix[mouseRow][mouseCol] == 'c') {
-                cheeseLeft++;
+                cheese++;
+
             } else if (matrix[mouseRow][mouseCol] == 'B') {
-                matrix[mouseRow][mouseCol] = '-';
                 continue;
             }
+            matrix[mouseRow][mouseCol] = 'M';
 
             command = scanner.nextLine();
-            if (cheeseLeft == 0) {
-                System.out.printf("Great job, the mouse is fed %d cheeses!\n", cheese);
-            } else {
-                System.out.printf("The mouse couldn't eat the cheeses, she needed %d cheeses more.\n", cheeseLeft);
-            }
-            printCharMatrix(matrix);
         }
+        if (cheese >= 5) {
+            System.out.printf("Great job, the mouse is fed %d cheeses!\n", cheese);
+        } else {
+            System.out.printf("The mouse couldn't eat the cheeses, she needed %d cheeses more.\n", 5 - cheese);
+        }
+        printCharMatrix(matrix);
+
     }
 
-     public static void printCharMatrix(char[][] matrix) {
-         for (char[] row : matrix) {
-             for (char element : row) {
-                 System.out.print(element);
-             }
-             System.out.println();
-         }
-     }
+    public static void printCharMatrix(char[][] matrix) {
+        for (char[] row : matrix) {
+            for (char element : row) {
+                System.out.print(element);
+            }
+            System.out.println();
+        }
+    }
 }

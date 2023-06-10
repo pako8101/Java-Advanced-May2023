@@ -13,6 +13,15 @@ public class RubberDuckDebuggers {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        String[]input1 = scanner.nextLine().split(" ");
+        String[]input2 = scanner.nextLine().split(" ");
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
+        Arrays.stream(input1).mapToInt(Integer::parseInt).forEach(queue::offer);
+
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
+        Arrays.stream(input2).mapToInt(Integer::parseInt).forEach(stack::push);
+
+
         ArrayDeque<Integer> timeValueQueue = new ArrayDeque<>();
         ArrayDeque<Integer> taskSequenceStack = new ArrayDeque<>();
         String input = scanner.nextLine();

@@ -6,6 +6,7 @@ public class PresentDelivery {
     private static int santaRow;
     private static int santaCol;
     private static int countNiceKids;
+    private static boolean isRunOutPresent = false;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -16,9 +17,8 @@ public class PresentDelivery {
         findSantaPosition(size, neighborhood);
         String commands = scanner.nextLine();
         while (!commands.equals("Christmas morning") && presentsCount > 0) {
-
+            commands = scanner.nextLine();
             switch (commands) {
-
                 case "up":
                     santaRow--;
                     break;
@@ -39,27 +39,35 @@ public class PresentDelivery {
             if (currentPosition.equals("V")) {
                 countNiceKids++;
                 presentsCount--;
-                neighborhood[santaRow][santaCol] = "S";
                 neighborhood[santaRow][santaCol] = "-";
             } else if (currentPosition.equals("X")) {
+                neighborhood[santaRow][santaCol] = "-";
                 continue;
 
-            } else if (currentPosition.equals("C")) {
+            }
+            if (currentPosition.equals("C")) {
                 presentsCount -= 4;
                 neighborhood[santaRow][santaCol] = "-";
             }
-                if (presentsCount <= 0) {
-                    System.out.println("Santa ran out of presents.");
-                    break;
-                }
+            if (presentsCount == 0) {
+                isRunOutPresent = true;
+                break;
+            }
+
+            neighborhood[santaRow][santaCol] = "-";
             commands = scanner.nextLine();
 
+        }
+
+
+        if (isRunOutPresent) {
+            System.out.println("Santa ran out of presents.");
         }
         printMatrix(neighborhood);
         if (countNiceKids <= presentsCount) {
             System.out.printf("Good job, Santa! %d happy nice kid/s.\n", countNiceKids);
         } else {
-            System.out.printf("No presents for %d nice kid/s.", Math.abs(presentsCount-countNiceKids));
+            System.out.printf("No presents for %d nice kid/s.\n", Math.abs(presentsCount - countNiceKids));
         }
     }
 
@@ -76,7 +84,7 @@ public class PresentDelivery {
                 if (currentRow.equals("S")) {
                     santaRow = row;
                     santaCol = col;
-                    return;
+                    break;
                 }
             }
         }
