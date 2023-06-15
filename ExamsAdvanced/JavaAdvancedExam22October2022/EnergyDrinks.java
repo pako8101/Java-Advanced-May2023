@@ -33,10 +33,8 @@ public class EnergyDrinks {
             if (stamatCaffeine + caffeineCalculate <= 300) {
                 stamatCaffeine += caffeineCalculate;
             } else {
-
-                stamatCaffeine -= 30;
                 energyDrinkQueue.offer(currentDrink);
-
+                stamatCaffeine -= 30;
                 if (stamatCaffeine < 0) {
                     stamatCaffeine = 0;
                 }
@@ -46,7 +44,7 @@ public class EnergyDrinks {
             System.out.println("At least Stamat wasn't exceeding the maximum caffeine.");
         } else {
             System.out.print("Drinks left: ");
-            energyDrinkQueue.forEach(e -> System.out.print(e + ", "));
+           // energyDrinkQueue.forEach(e -> System.out.print(e + ", "));
 //            String result = energyDrinkQueue.toString().replaceAll("[\\[\\]]", "");
 //            System.out.println(result);
             String result = energyDrinkQueue.stream()

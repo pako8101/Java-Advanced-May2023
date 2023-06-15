@@ -17,7 +17,7 @@ public class ClimbThePeaks {
         Queue<Integer> queueStamina = new ArrayDeque<>();
         Arrays.stream(dailyStamina).mapToInt(Integer::parseInt).forEach(queueStamina::offer);
         List<String> peaks = new ArrayList<>(Arrays.asList("Vihren",
-                "Kutelo", "Banksi Suhodol", "Polezhan", "Kamenitza"));
+                "Kutelo", "Banski Suhodol", "Polezhan", "Kamenitza"));
         Map<String, Integer> peeksMap = getPeeksMap();
 
         Set<String> conqueredPeeks = new LinkedHashSet<>();
@@ -62,7 +62,7 @@ public class ClimbThePeaks {
         Map<String, Integer> peeksMap = new LinkedHashMap<>();
         peeksMap.put("Vihren", 80);
         peeksMap.put("Kutelo", 90);
-        peeksMap.put("Banksi Suhodol", 100);
+        peeksMap.put("Banski Suhodol", 100);
         peeksMap.put("Polezhan", 60);
         peeksMap.put("Kamenitza", 70);
         return peeksMap;

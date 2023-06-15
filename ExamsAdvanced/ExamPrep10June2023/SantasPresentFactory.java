@@ -18,7 +18,7 @@ public class SantasPresentFactory {
         Arrays.stream(materialInput.split("\\s+"))
                 .map(Integer::parseInt).forEach(materialsStack::push);
 
-       Queue<Integer> magicsQueue = Arrays.stream(magicsInput.split("\\s+"))
+        Queue<Integer> magicsQueue = Arrays.stream(magicsInput.split("\\s+"))
                 .map(Integer::parseInt)
                 .collect(Collectors.toCollection(ArrayDeque::new));
 
@@ -80,12 +80,12 @@ public class SantasPresentFactory {
         }
         if (!materialsStack.isEmpty()) {
             System.out.print("Materials left: ");
-           Collections.reverse(materialsStack);
-            System.out.println(materialsStack.toString().replace("[", "").replace("]",""));
+            Collections.reverse(materialsStack);
+            System.out.println(materialsStack.toString().replace("[", "").replace("]", ""));
         }
         if (!magicsQueue.isEmpty()) {
             System.out.print("Magics left: ");
-            System.out.println(magicsQueue.toString().replace("[", "").replace("]",""));
+            System.out.println(magicsQueue.toString().replace("[", "").replace("]", ""));
         }
 
         for (Map.Entry<String, Integer> entry : presentMap.entrySet()) {
@@ -95,5 +95,6 @@ public class SantasPresentFactory {
             }
         }
     }
+
 
 }

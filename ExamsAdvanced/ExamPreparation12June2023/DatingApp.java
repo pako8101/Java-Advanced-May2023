@@ -10,27 +10,32 @@ public class DatingApp {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String[] females = scanner.nextLine().split("\\s+");
         String[] males = scanner.nextLine().split("\\s+");
-        ArrayDeque<Integer> queueFemales = new ArrayDeque<>();
-        Arrays.stream(females).mapToInt(Integer::parseInt).forEach(queueFemales::offer);
+        String[] females = scanner.nextLine().split("\\s+");
 
         ArrayDeque<Integer> stackMales = new ArrayDeque<>();
         Arrays.stream(males).mapToInt(Integer::parseInt).forEach(stackMales::push);
+
+        ArrayDeque<Integer> queueFemales = new ArrayDeque<>();
+        Arrays.stream(females).mapToInt(Integer::parseInt).forEach(queueFemales::offer);
 
 
         while (!queueFemales.isEmpty() && !stackMales.isEmpty()) {
             int femaleValue = queueFemales.peek();
             int maleValue = stackMales.peek();
-            if (femaleValue <= 0 || maleValue <= 0) {
+            if (femaleValue <= 0 ){
                 queueFemales.poll();
+                continue;
+            } else if (maleValue <= 0) {
                 stackMales.pop();
               continue;
             }
             if (femaleValue % 25 == 0) {
                 queueFemales.poll();
+                queueFemales.poll();
                 continue;
             } else if (maleValue % 25 == 0) {
+                stackMales.pop();
                 stackMales.pop();
                 continue;
             }
@@ -40,7 +45,7 @@ public class DatingApp {
                 queueFemales.poll();
             } else {
                 queueFemales.poll();
-                stackMales.push(maleValue - 2);
+                stackMales.push(stackMales.pop() - 2);
             }
         }
         System.out.println("Matches: " + matches);
