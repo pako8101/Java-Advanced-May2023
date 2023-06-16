@@ -48,7 +48,7 @@ public class Cooking {
                 liquidsQueue.poll();
                 ingredientsStack.pop();
             } else if (sum == FRUIT_PIE) {
-                foodsMap.put("Fruit Pie", foodsMap.get("Fruit pie") + 1);
+                foodsMap.put("Fruit Pie", foodsMap.get("Fruit Pie") + 1);
                 liquidsQueue.poll();
                 ingredientsStack.pop();
             } else {
@@ -56,18 +56,14 @@ public class Cooking {
                 ingredientsStack.push(ingredientsStack.pop() + 3);
             }
             // foodsMap.entrySet().stream().filter(entry -> entry.getValue() > 0);
-        }
 
+        }
         System.out.println(foodsMap.containsValue(0) ?
                 "Ugh, what a pity! You didn't have enough materials to cook everything." :
                 "Wohoo! You succeeded in cooking all the food!");
-//        boolean isMoreThenZero = foodsMap.get("Fruits pie") > 0 && foodsMap.get("Pastry") > 0 && foodsMap.get("Bread") > 0 && foodsMap.get("Cake") > 0;
-//        if (isMoreThenZero) {
-//            System.out.println("Wohoo! You succeeded in cooking all the food!");
-//        } else {
-//            System.out.println("Ugh, what a pity! You didn't have enough materials to cook everything.");
-//        }
-        System.out.println("Liquids left: ");
+
+
+        System.out.print("Liquids left: ");
         if (liquidsQueue.isEmpty()) {
             System.out.println("none");
         } else {
@@ -75,7 +71,7 @@ public class Cooking {
                     .collect(Collectors.joining(", "));
             System.out.println(result);
         }
-        System.out.println("Ingredients left: ");
+        System.out.print("Ingredients left: ");
         if (ingredientsStack.isEmpty()) {
             System.out.println("none");
         } else {

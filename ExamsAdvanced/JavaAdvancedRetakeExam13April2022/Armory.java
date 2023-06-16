@@ -5,62 +5,92 @@ import java.util.Scanner;
 public class Armory {
     private static int randomRow;
     private static int randomCol;
-    private static int blades;
+    private static boolean isOut = false;
     private static int buySword;
     private static int mirrorRow;
     private static int mirrorCol;
-    private static boolean hasDeal=false;
+    private static boolean hasDeal = false;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int size = Integer.parseInt(scanner.nextLine());
         String[][] armory = new String[size][size];
         fillMatrix(armory, scanner);
-        findRandomPosition(size, armory);
-        String command;
-        while (buySword < 65) {
-            command = scanner.nextLine();
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                String currentRow = armory[row][col];
+                if (currentRow.equals("A")) {
+                    randomRow = row;
+                    randomCol = col;
+                    break;
+                }
+            }
+        }
+
+        while (true) {
+            String command = scanner.nextLine();
+            armory[randomRow][randomCol] = "-";
+            randomRow = mirrorRow;
+            randomCol = mirrorCol;
             switch (command) {
                 case "up":
-                    randomRow--;
+                    mirrorRow--;
                     break;
                 case "down":
-                    randomRow++;
+                    mirrorRow++;
                     break;
                 case "left":
-                    randomCol--;
+                    mirrorCol--;
                     break;
                 case "right":
-                    randomCol++;
+                    mirrorCol++;
                     break;
             }
-            if (!isInBounds(armory, randomRow, randomCol)) {
-                System.out.println("I do not need more swords!");
+            if (isOutOfBounds(armory, mirrorRow, mirrorCol)) {
+                isOut = true;
                 break;
             }
-            String currentPosition = armory[randomRow][randomCol];
+            String currentPosition = armory[mirrorRow][mirrorCol];
 
             if (Character.isDigit(currentPosition.charAt(0))) {
-                buySword += Integer.parseInt(currentPosition);
-                armory[randomRow][randomCol] = "-";
-            } else if (currentPosition.equals("M")) {
-                findMirrorPosition(size, armory);
-                mirrorRow = randomRow;
-                mirrorCol = randomCol;
-                armory[randomRow][randomCol] = "-";
-                armory[randomRow][randomCol] = "A";
-            }
-            if (buySword >= 65) {
-                hasDeal=true;
+                buySword += Character.getNumericValue(currentPosition.charAt(0));
+                armory[mirrorRow][mirrorCol] = "-";
 
+            } else if (currentPosition.equals("M")) {
+                armory[mirrorRow][mirrorCol] = "-";
+                for (int row = 0; row < size; row++) {
+                    for (int col = 0; col < size; col++) {
+                        String currentRow = armory[row][col];
+                        if (currentRow.equals("M") && (row != mirrorRow || col != mirrorCol)) {
+                            armory[row][col] = "-";
+                            mirrorRow = row;
+                            mirrorCol = col;
+                        }
+
+                    }
+                }
+            }
+            armory[mirrorRow][mirrorCol] = "A";
+            randomRow = mirrorRow;
+            randomCol = mirrorCol;
+
+            if (buySword >= 65) {
+                hasDeal = true;
                 break;
             }
         }
-        System.out.printf(hasDeal ? "Very nice swords, I will come back for more!":"I do not need more swords!");
-        System.out.printf("The king paid %d gold coins.\n", buySword);
-        printMatrix(armory);
-        scanner.close();
+        if (isOut) {
+            System.out.println("I do not need more swords!");
 
+        } else if (hasDeal){
+            System.out.println( "Very nice swords, I will come back for more!");
+           // System.out.printf(hasDeal ? "Very nice swords, I will come back for more!%n" : "I do not need more swords!%n");
+        }else {
+            System.out.println("I do not need more swords!");
+        }
+            System.out.printf("The king paid %d gold coins.\n", buySword);
+            printMatrix(armory);
+           // scanner.close();
 
     }
 
@@ -70,18 +100,6 @@ public class Armory {
         }
     }
 
-    private static void findRandomPosition(int size, String[][] matrix) {
-        for (int row = 0; row < size; row++) {
-            for (int col = 0; col < size; col++) {
-                String currentRow = matrix[row][col];
-                if (currentRow.equals("A")) {
-                    randomRow = row;
-                    randomCol = col;
-                    return;
-                }
-            }
-        }
-    }
 
     public static void printMatrix(String[][] matrix) {
         for (int row = 0; row < matrix.length; row++) {
@@ -92,8 +110,8 @@ public class Armory {
         }
     }
 
-    private static boolean isInBounds(String[][] matrix, int r, int c) {
-        return r >= 0 && r < matrix.length && c >= 0 && c < matrix[r].length;
+    private static boolean isOutOfBounds(String[][] matrix, int r, int c) {
+        return r < 0 || r >= matrix.length || c < 0 || c >= matrix[r].length;
     }
 
     private static void findMirrorPosition(int size, String[][] matrix) {
@@ -101,9 +119,10 @@ public class Armory {
             for (int col = 0; col < size; col++) {
                 String currentRow = matrix[row][col];
                 if (currentRow.equals("M") && (row != randomRow || col != randomCol)) {
+                    matrix[row][col] = "-";
                     mirrorRow = row;
                     mirrorCol = col;
-                    break;
+                    return;
                 }
             }
         }

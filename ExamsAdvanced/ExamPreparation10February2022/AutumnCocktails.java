@@ -10,7 +10,7 @@ public class AutumnCocktails {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Map<String, Integer> cocktails = new HashMap<>();
+        Map<String, Integer> cocktails = new TreeMap<>();
         cocktails.put("Pear Sour", 0);
         cocktails.put("The Harvest", 0);
         cocktails.put("Apple Hinny", 0);
@@ -29,39 +29,38 @@ public class AutumnCocktails {
                 .forEach(freshnessLevelStack::push);
 //        int pearCount = 0, harvestCount = 0, appleCount = 0, fashionCount = 0;
         while (!ingredientsQueue.isEmpty() && !freshnessLevelStack.isEmpty()) {
-            int firstIngredient =  ingredientsQueue.poll();
+            int firstIngredient = ingredientsQueue.peek();
             if (firstIngredient == 0) {
+                ingredientsQueue.poll();
                 continue;
             }
-            int lastFreshness = freshnessLevelStack.pop();
-            int freshnessLevel = firstIngredient * lastFreshness;
+            int lastFreshness = freshnessLevelStack.peek();
+            int totalFreshnessLevel = firstIngredient * lastFreshness;
 
 
-            switch (freshnessLevel) {
+            switch (totalFreshnessLevel) {
                 case Pear_Sour:
                     int currentPear = cocktails.get("Pear Sour");
-                    currentPear++;
-                    cocktails.put("Pear Sour", currentPear);
-                    //pearCount++;
+                    cocktails.put("Pear Sour", currentPear + 1);
+                    ingredientsQueue.poll();
+                    freshnessLevelStack.pop();
                     break;
                 case The_Harvest:
                     int currentHarvest = cocktails.get("The Harvest");
-                    currentHarvest++;
-                    cocktails.put("The Harvest", currentHarvest);
-                    // harvestCount++;
+                    cocktails.put("The Harvest", currentHarvest + 1);
+                    ingredientsQueue.poll();
+                    freshnessLevelStack.pop();
                     break;
                 case Apple_Hinny:
                     int currentApple = cocktails.get("Apple Hinny");
-                    currentApple++;
-                    cocktails.put("Apple Hinny", currentApple);
-                    // appleCount++;
+                    cocktails.put("Apple Hinny", currentApple + 1);
+                    ingredientsQueue.poll();
+                    freshnessLevelStack.pop();
                     break;
                 case High_Fashion:
                     cocktails.put("High Fashion", cocktails.get("High Fashion") + 1);
-//                    int currentFashion = cocktails.get("High Fashion");
-//                    currentFashion++;
-//                    cocktails.put("High Fashion", currentFashion);
-                    //  fashionCount++;
+                    ingredientsQueue.poll();
+                    freshnessLevelStack.pop();
                     break;
 
                 default:
@@ -72,38 +71,42 @@ public class AutumnCocktails {
                     break;
 
             }
-//            ingredientsQueue.poll();
-//            freshnessLevelStack.pop();
-        }
-        if (cocktails.get("Pear Sour") > 0
-                && cocktails.get("The Harvest") > 0
-                && cocktails.get("Apple Hinny") > 0
-                && cocktails.get("High Fashion") > 0) {
-            System.out.println("It's party time! The cocktails are ready!");
-        } else {
-            System.out.println("What a pity! You didn't manage to prepare all cocktails.");
-        }
-        if (!ingredientsQueue.isEmpty()) {
-//            int leftIngredients = ingredientsQueue.stream().mapToInt(e -> e).sum();
-            int sum = 0;
-            for (Integer ingredient : ingredientsQueue) {
-                 sum += ingredient;
-            }
-            System.out.printf("Ingredients left: %d%n", sum);
-        }
-        if (cocktails.get("Pear Sour") > 0) {
-            System.out.printf("# Pear Sour --> %d%n", cocktails.get("Pear Sour"));
-        }
-        if (cocktails.get("The Harvest") > 0) {
-            System.out.printf("# The Harvest --> %d%n", cocktails.get("The Harvest"));
-        }
-        if (cocktails.get("Apple Hinny") > 0) {
-            System.out.printf("# Apple Hinny --> %d%n", cocktails.get("Apple Hinny"));
-        }
-        if (cocktails.get("High Fashion") > 0) {
-            System.out.printf("# High Fashion --> %d%n", cocktails.get("High Fashion"));
-//            cocktails.entrySet().forEach(entry -> System.out.println("# " + entry.getKey() + " --> " + entry.getValue()));
+
 
         }
+        System.out.println(cocktails.containsValue(0) ? "What a pity! You didn't manage to prepare all cocktails." :
+                "It's party time! The cocktails are ready!");
+
+        if (!ingredientsQueue.isEmpty()) {
+            int leftIngredients = ingredientsQueue.stream().mapToInt(e -> e).sum();
+
+            System.out.printf("Ingredients left: %d%n", leftIngredients);
+        }
+//        if (cocktails.get("Apple Hinny") > 0) {
+//            System.out.printf("# Apple Hinny --> %d%n", cocktails.get("Apple Hinny"));
+//        }
+//        if (cocktails.get("High Fashion") > 0) {
+//            System.out.printf("# High Fashion --> %d%n", cocktails.get("High Fashion"));
+//        }
+//        if (cocktails.get("Pear Sour") > 0) {
+//            System.out.printf("# Pear Sour --> %d%n", cocktails.get("Pear Sour"));
+//        }
+//        if (cocktails.get("The Harvest") > 0) {
+//            System.out.printf("# The Harvest --> %d%n", cocktails.get("The Harvest"));
+//        }
+        cocktails.entrySet().stream().filter(entry -> entry.getValue() > 0)
+                .forEach(e -> System.out.println("# " + e.getKey() + " --> " + e.getValue()));
+//          cocktails.entrySet().stream().sorted((a, b) -> b.getValue().compareTo(a.getValue()))
+//                          .forEach(e ->  System.out.println("# " + e.getKey() + " --> " + e.getValue()));
+
+//        for (Map.Entry<String, Integer> entry : cocktails.entrySet()) {
+//            if (entry.getValue() > 0) {
+//                System.out.println("# " + entry.getKey() + " --> " + entry.getValue());
+//            }
+//        }
+
     }
+
+
 }
+

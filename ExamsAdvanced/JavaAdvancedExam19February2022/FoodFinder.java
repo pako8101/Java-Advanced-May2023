@@ -1,9 +1,6 @@
 package ExamsAdvanced.JavaAdvancedExam19February2022;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FoodFinder {
@@ -19,8 +16,8 @@ public class FoodFinder {
         Arrays.stream(input.split("\\s+"))
                 .forEach(consonantsStack::push);
 
-        List<String> words = List.of("pear", "flour", "pork", "olive");
-        List<String> foundWords = new java.util.ArrayList<>(List.of("____", "____", "____", "____"));
+        List<String> words = Arrays.asList("pear", "flour", "pork", "olive");
+        List<String> foundWords = new LinkedList<>(Arrays.asList("____", "____", "____", "____"));
         while (!vowelsQueue.isEmpty() && !consonantsStack.isEmpty()) {
 
             String vowel = vowelsQueue.poll();
@@ -29,24 +26,24 @@ public class FoodFinder {
             for (int i = 0; i < words.size(); i++) {
                 String currentWord = words.get(i);
                 StringBuilder emptyWord = new StringBuilder(foundWords.get(i));
-                if (currentWord.contains(vowel)) {
+                if (currentWord.contains(vowel) && currentWord.contains(consonant)) {
                     int vowelIndex = currentWord.indexOf(vowel);
-                    emptyWord.setCharAt(vowelIndex, vowel.charAt(0));
-
-                }
-                if (currentWord.contains(consonant)) {
                     int consIndex = currentWord.indexOf(consonant);
-                    emptyWord.setCharAt(consIndex, consonant.charAt(0));
+
+                    if (vowelIndex < consIndex) {
+                        emptyWord.setCharAt(vowelIndex, vowel.charAt(0));
+                        emptyWord.setCharAt(consIndex, consonant.charAt(0));
+                    }
+                    foundWords.set(i, emptyWord.toString());
                 }
-                foundWords.set(i, emptyWord.toString());
+                vowelsQueue.offer(vowel);
             }
-            vowelsQueue.offer(vowel);
         }
-        List<String> result = foundWords.stream()
-                .filter(word -> !word.contains("_"))
-                .collect(Collectors.toList());
-        System.out.printf("Words found: %d ", result.size());
-        result.forEach(System.out::println);
+            List<String> result = foundWords.stream()
+                    .filter(word -> !word.contains("_"))
+                    .collect(Collectors.toList());
+            System.out.printf("Words found: %d%n", result.size());
+            result.forEach(System.out::println);
+
     }
 }
-
